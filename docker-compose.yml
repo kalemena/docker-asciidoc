@@ -1,0 +1,15 @@
+version: '2'
+services:  
+  
+  asciidoc-html:
+    image: asciidoctor/docker-asciidoctor
+    volumes:
+     - ./samples:/documents/
+    command: asciidoctor -D /documents/output *.adoc
+
+  asciidoc-pdf:
+    image: asciidoctor/docker-asciidoctor
+    volumes:
+     - ./samples:/documents/
+    command: asciidoctor-pdf -D /documents/output *.adoc
+  
