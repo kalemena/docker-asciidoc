@@ -5,11 +5,18 @@ services:
     image: asciidoctor/docker-asciidoctor
     volumes:
      - ./samples:/documents/
-    command: asciidoctor -D /documents/output *.adoc
+    command: asciidoctor -a data-uri -a icons -D /documents/output *.adoc
 
   asciidoc-pdf:
     image: asciidoctor/docker-asciidoctor
     volumes:
      - ./samples:/documents/
-    command: asciidoctor-pdf -D /documents/output *.adoc
+    command: asciidoctor-pdf -a icons -D /documents/output *.adoc
+
+  asciidoc-serve:
+    image: nginx
+    ports:
+     - "8010:80"
+    volumes:
+     - ./samples/output:/usr/share/nginx/html
   

@@ -147,7 +147,11 @@ Do you feel safer with the tiger in a box?
 .Tiger in a box
 image::tiger.png[]
 
-include::includes/include.adoc[]
+[source,groovy]
+.Sample.groovy
+----
+include::includes/sample.groovy[tags=helloMethod]
+----
 
 .Asciidoctor usage example. The listing should contain 5 lines.
 [source,ruby]
