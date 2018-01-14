@@ -15,7 +15,7 @@ Dan Allen <thedoc@asciidoctor.org>
 :imagesdir: images
 :toc: left
 :css-signature: demo
-:toc-placement: preamble
+:toc-placement: left
 //:max-width: 800px
 //:doctype: book
 //:sectids!:

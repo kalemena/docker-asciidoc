@@ -5,7 +5,7 @@ services:
     image: asciidoctor/docker-asciidoctor
     volumes:
      - ./samples:/documents/
-    command: asciidoctor -a data-uri -a icons -D /documents/output *.adoc
+    command: asciidoctor -a toc -a data-uri -a icons -D /documents/output *.adoc
 
   asciidoc-pdf:
     image: asciidoctor/docker-asciidoctor
