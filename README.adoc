@@ -1,0 +1,26 @@
+
+= docker-asciidoc
+ifdef::env-github[:outfilesuffix: .adoc]
+
+ASCIIDOC tooling
+
+== Editors
+
+* VSCode plugin
+* Eclipse plugin
+* http://espadrine.github.io/AsciiDocBox/[AsciiDoc]
+* https://asciidoclive.com/edit/scratch/1[AsciiDocLive]
+
+== Tutorials
+
+* https://powerman.name/doc/asciidoc[Cheat sheet]
+* http://www.vogella.com/tutorials/AsciiDoc/article.html[Vogella]
+
+= Convert
+
+Docker image has every convert tool.
+See docker-compose.yml
+
+= TODO
+
+Check https://github.com/asciidoctor/asciidoctor-confluence[asciidoctor-confluence]
