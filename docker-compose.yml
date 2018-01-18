@@ -1,6 +1,7 @@
 version: '2'
 services:  
   
+  # These will start and die
   asciidoc-html:
     image: asciidoctor/docker-asciidoctor
     volumes:
@@ -12,6 +13,34 @@ services:
     volumes:
      - ./samples:/documents/
     command: asciidoctor-pdf -a icons -D /documents/output *.adoc
+
+  asciidoc-confluence:
+    image: asciidoctor/docker-asciidoctor
+    volumes:
+     - ./samples:/documents/
+    command: asciidoctor-confluence --host http://confluence:8090 --spaceKey ${CONFLUENCE_SPACEKEY} --title ${CONFLUENCE_TITLE} --username ${CONFLUENCE_USERNAME} --password ${CONFLUENCE_PASSWORD} /documents/demo1.adoc
+
+  # These will stay up and running
+  postgres:
+    image: postgres
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    environment:
+      - 'POSTGRES_USER=confluencedb'
+      - 'POSTGRES_PASSWORD=${POSTGRES_PASSWORD}'
+      - 'POSTGRES_DB=confluencedb'
+      - 'POSTGRES_ENCODING=UTF8'
+      - 'POSTGRES_COLLATE=C'
+      - 'POSTGRES_COLLATE_TYPE=C'
+
+  confluence:
+    image: atlassian/confluence-server
+    volumes:
+     - ./data/confluence:/var/atlassian/application-data/confluence
+     - ./data/confluence-shared:/var/atlassian/application-data/confluence-shared
+    ports:
+     - "8090:8090"
+     - "8091:8091"
 
   asciidoc-serve:
     image: nginx
