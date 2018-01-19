@@ -1,0 +1,27 @@
+Asciidoctor Demo
+================
+
+This is a demonstration of {library} {asciidoctor-version}.
+And this is the preamble of this document.
+
+[[purpose]]
+.Purpose
+****
+This document exercises many of the features of AsciiDoc to test the {library} implementation.
+****
+
+TIP: If you want the output to look familiar, copy (or link) the AsciiDoc stylesheet, asciidoc.css, to the output directory.
+
+NOTE: Items marked with TODO are either not yet supported or a work in progress.
+
+== First Steps with AsciiDoc
+
+Links:
+
+* link:http://forum.mysensors.org/topic/230/power-conservation-with-battery-powered-sensors[Details here]
+* link:http://www.openhomeautomation.net/arduino-battery/[How to Run an Arduino for Years on a Battery]
+
+
+== Images
+
+image:images/tiger.png[Tiger]
