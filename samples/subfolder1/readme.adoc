@@ -1,5 +1,24 @@
 Asciidoctor Demo
 ================
+////
+Big ol' comment
+
+sittin' right 'tween this here title 'n header metadata
+////
+Dan Allen <thedoc@asciidoctor.org>
+:description: A demo of Asciidoctor. This document +
+              exercises numerous features of AsciiDoc +
+              to test Asciidoctor compliance.
+:library: Asciidoctor
+:idprefix:
+:numbered:
+:imagesdir: ./images
+:toc: left
+:css-signature: demo
+:toc-placement: left
+//:max-width: 800px
+//:doctype: book
+//:sectids!:
 
 This is a demonstration of {library} {asciidoctor-version}.
 And this is the preamble of this document.
@@ -9,6 +28,8 @@ And this is the preamble of this document.
 ****
 This document exercises many of the features of AsciiDoc to test the {library} implementation.
 ****
+
+This is {imagesdir} directory
 
 TIP: If you want the output to look familiar, copy (or link) the AsciiDoc stylesheet, asciidoc.css, to the output directory.
 
@@ -24,4 +45,11 @@ Links:
 
 == Images
 
-image:images/tiger.png[Tiger]
+image:tiger.png[Tiger]
+
+:imagesdir: ./subfolder1
+image:papillon.jpeg[Papillon]
+
+NOTE: Back to note mode
+
+== link:readme.pdf[Download this]

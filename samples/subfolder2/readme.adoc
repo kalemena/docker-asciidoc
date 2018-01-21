@@ -1,5 +1,25 @@
 The Article Title
 =================
+////
+Big ol' comment
+
+sittin' right 'tween this here title 'n header metadata
+////
+Dan Allen <thedoc@asciidoctor.org>
+:description: A demo of Asciidoctor. This document +
+              exercises numerous features of AsciiDoc +
+              to test Asciidoctor compliance.
+:library: Asciidoctor
+:idprefix:
+:numbered:
+:imagesdir: ./images
+:toc: left
+:css-signature: demo
+:toc-placement: left
+//:max-width: 800px
+//:doctype: book
+//:sectids!:
+
 Author's Name <authors@email.address>
 v1.0, 2003-12
 
@@ -38,11 +58,11 @@ entries.
 (((Big cats,Tigers,Siberian Tiger)))
 Note that multi-entry terms generate separate index entries.
 
-Here are a couple of image examples: an image:images/smallnew.png[]
+Here are a couple of image examples: an image:smallnew.png[]
 example inline image followed by an example block image:
 
 .Tiger block image
-image::images/tiger.png[Tiger image]
+image::tiger.png[Tiger image]
 
 Followed by an example table:
 
@@ -137,3 +157,5 @@ The index is normally left completely empty, it's contents being
 generated automatically by the DocBook toolchain.
 ////////////////////////////////////////////////////////////////
 endif::backend-docbook[]
+
+== link:readme.pdf[Download this]

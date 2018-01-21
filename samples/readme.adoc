@@ -12,7 +12,7 @@ Dan Allen <thedoc@asciidoctor.org>
 :library: Asciidoctor
 :idprefix:
 :numbered:
-:imagesdir: images
+:imagesdir: ./images
 :toc: left
 :css-signature: demo
 :toc-placement: left
@@ -28,6 +28,8 @@ ifdef::env-github[]
 <a name="purpose"></a>
 ++++
 endif::env-github[]
+
+This is {imagesdir} directory
 
 [[purpose]]
 .Purpose
@@ -253,4 +255,9 @@ One more thing. Happy documenting!
 
 [[google]]When all else fails, head over to <http://google.com>.
 
-= link:demo.pdf[Download this]
+== Links
+ 
+=== link:subfolder1[Subfolder1]
+=== link:subfolder2[Subfolder2]
+
+== link:readme.pdf[Download this]
