@@ -12,7 +12,7 @@ Dan Allen <thedoc@asciidoctor.org>
 :library: Asciidoctor
 :idprefix:
 :numbered:
-:imagesdir: ./images
+:imagesdir: /documents-rendered/images
 :toc: left
 :css-signature: demo
 :toc-placement: left
@@ -254,6 +254,235 @@ Here's a reference to the definition of <<another_term>>, in case you forgot it.
 One more thing. Happy documenting!
 
 [[google]]When all else fails, head over to <http://google.com>.
+
+
+== Diagrams
+
+
+http://www.machinekit.io/docs/documenting/diagram-examples/[Many examples]
+
+
+.Inline Ditaa diagram
+[ditaa, "ditaa-diagram"]
+----
+                   +-------------+
+                   | Asciidoctor |-------+
+                   |   diagram   |       |
+                   +-------------+       | PNG out
+                       ^                 |
+                       | ditaa in        |
+                       |                 v
+ +--------+   +--------+----+    /---------------\
+ |        | --+ Asciidoctor +--> |               |
+ |  Text  |   +-------------+    |   Beautiful   |
+ |Document|   |   !magic!   |    |    Output     |
+ |     {d}|   |             |    |               |
+ +---+----+   +-------------+    \---------------/
+     :                                   ^
+     |          Lots of work             |
+     +-----------------------------------+
+----
+
+
+.Inline Class diagram
+[plantuml, diagram-classes, png]     
+----
+class BlockProcessor
+class DiagramBlock
+class DitaaBlock
+class PlantUmlBlock
+
+BlockProcessor <|-- DiagramBlock
+DiagramBlock <|-- DitaaBlock
+DiagramBlock <|-- PlantUmlBlock
+----
+
+
+.Inline State diagram
+[graphviz, dot-example, svg]
+----
+digraph g {
+    a -> b
+    b -> c
+    c -> d
+    d -> a
+}
+----
+
+
+.Inline Class diagram
+[[main-classes]]
+.The PlantUML block extension class
+[plantuml, sample-plantuml-diagram, alt="Class diagram", width=135, height=118]
+----
+class BlockProcessor
+class PlantUmlBlock
+BlockProcessor <|-- PlantUmlBlock
+----
+
+
+.External included Class diagram
+plantuml::classes.txt[format=svg, alt="Class diagram", width=300, height=200]
+
+
+.Other diagram
+[plantuml, diagram, png]
+----
+Bob->Alice : hello
+----
+
+
+[graphviz, "dot_example", "svg"]
+----
+graph ethane {
+     C_0 -- H_0 [type=s];
+     C_0 -- H_1 [type=s];
+     C_0 -- H_2 [type=s];
+     C_0 -- C_1 [type=s];
+     C_1 -- H_3 [type=s];
+     C_1 -- H_4 [type=s];
+     C_1 -- H_5 [type=s];
+}
+----
+
+
+[plantuml, diagram-bis, png]
+----
+Lexer->DiagramBlock : process
+activate DiagramBlock #FFBBBB
+
+DiagramBlock -> DiagramBlock: create_image_block
+activate DiagramBlock #DarkSalmon
+
+DiagramBlock -> DiagramBlock: code_checksum
+
+DiagramBlock -> DitaaGenerator: ditaa
+activate DitaaGenerator
+DiagramBlock <-- DitaaGenerator: image as String
+deactivate DitaaGenerator
+deactivate DiagramBlock
+
+Lexer <-- DiagramBlock: generated Block
+deactivate DiagramBlock
+----
+
+[plantuml, diagram-of-state, png]
+----
+scale 350 width
+[*] --> NotShooting
+
+state NotShooting {
+  [*] --> Idle
+  Idle --> Configuring : EvConfig
+  Configuring --> Idle : EvConfig
+}
+
+state Configuring {
+  [*] --> NewValueSelection
+  NewValueSelection --> NewValuePreview : EvNewValue
+  NewValuePreview --> NewValueSelection : EvNewValueRejected
+  NewValuePreview --> NewValueSelection : EvNewValueSaved
+  
+  state NewValuePreview {
+     State1 -> State2
+  }
+  
+}
+----
+
+
+[plantuml, diagram-of-yes-no, png]
+----
+start
+:ClickServlet.handleRequest();
+:new page;
+if (Page.onSecurityCheck) then (true)
+  :Page.onInit();
+  if (isForward?) then (no)
+    :Process controls;
+    if (continue processing?) then (no)
+      stop
+    endif
+    
+    if (isPost?) then (yes)
+      :Page.onPost();
+    else (no)
+      :Page.onGet();
+    endif
+    :Page.onRender();
+  endif
+else (false)
+endif
+
+if (do redirect?) then (yes)
+  :redirect process;
+else
+  if (do forward?) then (yes)
+    :Forward request;
+  else (no)
+    :Render page template;
+  endif
+endif
+
+stop
+----
+
+
+[plantuml, diagram-case, png]
+----
+skinparam handwritten true
+
+skinparam usecase {
+	BackgroundColor DarkSeaGreen
+	BorderColor DarkSlateGray
+
+	BackgroundColor<< Main >> YellowGreen
+	BorderColor<< Main >> YellowGreen
+	
+	ArrowColor Olive
+	ActorBorderColor black
+	ActorFontName Courier
+
+	ActorBackgroundColor<< Human >> Gold
+}
+
+User << Human >>
+:Main Database: as MySql << Application >>
+(Start) << One Shot >>
+(Use the application) as (Use) << Main >>
+
+User -> (Start)
+User --> (Use)
+
+MySql --> (Use)
+----
+
+
+[plantuml, diagram-alice-bob, png]
+----
+Alice -> Bob: Authentication Request
+
+alt successful case
+
+    Bob -> Alice: Authentication Accepted
+    
+else some kind of failure
+
+    Bob -> Alice: Authentication Failure
+    group My own label
+    	Alice -> Log : Log attack start
+        loop 1000 times
+            Alice -> Bob: DNS Attack
+        end
+    	Alice -> Log : Log attack end
+    end
+    
+else Another type of failure
+
+   Bob -> Alice: Please repeat
+   
+end
+----
 
 == Links
  
