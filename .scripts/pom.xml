@@ -1,0 +1,47 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.genesys.mobile</groupId>
+  <artifactId>asciidoc</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>asciidoc</name>
+  <url>http://maven.apache.org</url>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.sahli.asciidoc.confluence.publisher</groupId>
+        <artifactId>asciidoc-confluence-publisher-maven-plugin</artifactId>
+        <version>0.3.0</version>
+        <configuration>
+          <asciidocRootFolder>${DOCUMENTS_FOLDER}</asciidocRootFolder>
+          <sourceEncoding>UTF-8</sourceEncoding> <!-- default -->
+          <rootConfluenceUrl>${CONFLUENCE_URL}</rootConfluenceUrl>
+          <spaceKey>${CONFLUENCE_SPACEKEY}</spaceKey>
+          <ancestorId>${CONFLUENCE_ANCESTORID}</ancestorId>
+          <username>${CONFLUENCE_USERNAME}</username>
+          <password>${CONFLUENCE_PASSWORD}</password>
+          <pageTitlePrefix xml:space="preserve">${CONFLUENCE_PAGE_PREFIX}</pageTitlePrefix>
+          <pageTitleSuffix xml:space="preserve">${CONFLUENCE_PAGE_SUFFIX}</pageTitleSuffix>
+        </configuration>
+        <executions>
+            <execution>
+                <id>publish-documentation</id>
+                <goals>
+                    <goal>publish</goal>
+                </goals>
+                <phase>site</phase>
+            </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
