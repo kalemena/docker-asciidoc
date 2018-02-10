@@ -3,61 +3,56 @@ services:
   
   # This container will start, build and exit
   asciidoc-build:
-    image: asciidoctor/docker-asciidoctor
+    image: kalemena/asciidoc
     volumes:
-     - ./build.sh:/build.sh
-     - ./asciidoc.conf:/root/.asciidoc/asciidoc.conf
-     - ./samples:/documents/
+     - ./.scripts/asciidoc.conf:/root/.asciidoc/asciidoc.conf
+     - ./doc-samples:/documents/
      - docs-rendered:/documents-rendered/
-    command: bash /build.sh 
+    environment:
+     - CONFLUENCE_URL=${CONFLUENCE_URL}
+     - CONFLUENCE_SPACEKEY=${CONFLUENCE_SPACEKEY}
+     - CONFLUENCE_ANCESTORID=${CONFLUENCE_ANCESTORID}
+     - CONFLUENCE_USERNAME=${CONFLUENCE_USERNAME}
+     - CONFLUENCE_PASSWORD=${CONFLUENCE_PASSWORD}
+     - CONFLUENCE_PAGE_PREFIX=${CONFLUENCE_PAGE_PREFIX}
+     - CONFLUENCE_PAGE_SUFFIX=${CONFLUENCE_PAGE_SUFFIX}
+     - DOCUMENTS_FOLDER=${DOCUMENTS_FOLDER}
 
   # NginX serves static pages builded above
   asciidoc-serve:
     image: nginx
     ports:
-     - "8010:80"
+     - "80:80"
     volumes:
-     - ./default-site.conf:/etc/nginx/conf.d/default.conf
+     - ./.scripts/default-site.conf:/etc/nginx/conf.d/default.conf
      - docs-rendered:/usr/share/nginx/html
 
-  # # CONFLUENCE stuff here
-  # confluencedb:
-  #   image: postgres
-  #   volumes:
-  #     - ./data/postgres:/var/lib/postgresql/data
-  #   environment:
-  #     - 'POSTGRES_USER=confluencedb'
-  #     - 'POSTGRES_PASSWORD=${POSTGRES_PASSWORD}'
-  #     - 'POSTGRES_DB=confluencedb'
-  #     - 'POSTGRES_ENCODING=UTF8'
-  #     - 'POSTGRES_COLLATE=C'
-  #     - 'POSTGRES_COLLATE_TYPE=C'
+  # CONFLUENCE stuff here
+  confluencedb:
+    image: postgres
+    volumes:
+      - confluence-db:/var/lib/postgresql/data
+    environment:
+      - 'POSTGRES_USER=confluencedb'
+      - 'POSTGRES_PASSWORD=${POSTGRES_PASSWORD}'
+      - 'POSTGRES_DB=confluencedb'
+      - 'POSTGRES_ENCODING=UTF8'
+      - 'POSTGRES_COLLATE=C'
+      - 'POSTGRES_COLLATE_TYPE=C'
     
-  # confluence:
-  #   image: atlassian/confluence-server
-  #   depends_on:
-  #     - confluencedb
-  #   volumes:
-  #    - ./data/confluence:/var/atlassian/application-data/confluence
-  #    - ./data/confluence-shared:/var/atlassian/application-data/confluence-shared
-  #   ports:
-  #    - "8090:8090"
-  #    - "8091:8091"
-
-  # asciidoc-mvn-confluence:
-  #   image: maven:3.5-jdk-8
-  #   volumes:
-  #     - ./data:/root
-  #     - ./data/maven-doc:/data/maven-doc
-  #     - ./samples:/documents/
-  #     - ./build-confluence.sh:/build-confluence.sh
-  #   command: bash /build-confluence.sh
-  #   environment:
-  #    - CONFLUENCE_SPACEKEY=${CONFLUENCE_SPACEKEY}
-  #    - CONFLUENCE_ANCESTORID=${CONFLUENCE_ANCESTORID}
-  #    - CONFLUENCE_USERNAME=${CONFLUENCE_USERNAME}
-  #    - CONFLUENCE_PASSWORD=${CONFLUENCE_PASSWORD}
-
+  confluence:
+    image: atlassian/confluence-server
+    container_name: confluence
+    hostname: confluence
+    depends_on:
+      - confluencedb
+    volumes:
+     - confluence:/var/atlassian/application-data/confluence
+     - confluence-shared:/var/atlassian/application-data/confluence-shared
+    ports:
+     - "8090:8090"
+     - "8091:8091"
+  
   # # MEDIAWIKI stuff here
   # mediawiki:
   #   image: mediawiki
@@ -85,4 +80,7 @@ services:
 
 volumes:
   docs-rendered:
+  confluence-db:
+  confluence:
+  confluence-shared:
   
