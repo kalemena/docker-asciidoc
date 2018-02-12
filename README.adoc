@@ -21,6 +21,15 @@ ASCIIDOC tooling
 Docker image has every convert tool.
 See docker-compose.yml
 
-= TODO
+= Confluence
 
-Check https://github.com/asciidoctor/asciidoctor-confluence[asciidoctor-confluence]
+This project uses https://github.com/alainsahli/confluence-publisher[confluence-publisher]
+
+== Manually test a page publication
+
+Assuming all variables in .env file are set properly, run following:
+
+```bash
+$ docker run -it --env-file .env -v <doc-folder>:/documents-rendered/ kalemena/asciidoc bash
+$ # mvn -e -X org.sahli.asciidoc.confluence.publisher:asciidoc-confluence-publisher-maven-plugin:publish 
+```
