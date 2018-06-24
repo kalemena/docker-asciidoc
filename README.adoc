@@ -2,6 +2,10 @@
 = docker-asciidoc
 ifdef::env-github[:outfilesuffix: .adoc]
 
+ifdef::env-github[]
+image:https://img.shields.io/travis/kalemena/docker-asciidoc/master.svg[Travis build status, link=https://travis-ci.org/kalemena/docker-asciidoc]
+endif::[]
+
 ASCIIDOC tooling
 
 == Editors
