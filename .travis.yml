@@ -1,0 +1,29 @@
+sudo: required
+
+services:
+  - docker
+
+env:
+  global:
+    - REGISTRY_USER=kalemena
+    - secure: "P7GWiuOs90WjmeVnyiSlB3o/RS7LqgLSUzDLK+KzDhk9TRT8wR4vzN8L64l364ANENe8Ie2NzsEWXtFNYQlxCANDVKNgNKuWmpVKcCFu+4Dc+1q/7IpaPLs4HYOIPg8wJq4x8KpV6MYZBN+zcpJU3Rqvi+prl6vgBeWEGueR+gT5xpwVrHPWasdkr59/SigMekWto7wOcWjF4rQQV8oH+bCUpD6O4j3l9PEjnhRN52DChjiktof1+dFDJB0GIXzBhdrzLL1tBJrpmLtjSwtUkE3+ftbd5H4dRdhN3ymmE1ws2rGOyn3trmwlxrqe6G3/3ZvTLiYVukttvS8SoXde9a5FAEJwhsmgwgJ2jksbvKxuJu47fu/hGnCksMjzoI+DKdv/PAfoBghPWvLmHEIGhFlD8RNvqZk5IjJiE7kDhdjyy5nyOt/nVqbx3zSOHkeIN+iDvKGnM3WZ5rzh3ZoTxRc9rj9vN4/uGKxPb4xdbwuVZw4MSPh8XZrUBHJLO0n8aEOorbzUPa7JbaRc9qhSsrnBvkzGdXEnuwwTwWVOiKjscCUjU0jnDCBykNTMdX+FW/z4Iik67dx365yotsgjtXm6OGClBZtJwt6TrwBKa7LOBCu8N6uhv5CFqV4n8/vIsoGm9hTCPpj3W7j4rZHvXW9YV+4ln0jyzrDDMqXeEWI="
+  matrix:
+    - IMAGE="kalemena/asciidoc" REPO="kalemena/docker-asciidoc"
+
+before_script:
+  - docker pull asciidoctor/docker-asciidoctor
+  - docker pull ${IMAGE} || true
+
+script:
+  - docker build --pull --cache-from ${IMAGE} -t ${IMAGE} -f .scripts/Dockerfile .scripts/
+  - docker ps -a
+  - docker images
+
+before_deploy:
+  - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
+
+deploy:
+  provider: script
+  script: docker push ${IMAGE}
+  on:
+    branch: master
