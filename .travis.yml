@@ -15,7 +15,14 @@ before_script:
   - docker pull ${IMAGE} || true
 
 script:
-  - docker build --pull --cache-from ${IMAGE} -t ${IMAGE} -f .scripts/Dockerfile .scripts/
+  - |
+    docker build --pull --cache-from ${IMAGE} \
+      -t ${IMAGE} \
+      -f .scripts/Dockerfile \
+      --build-arg NODERED_VERSION=${VERSION} \
+      --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
+      --build-arg VCS_REF=`git rev-parse --short HEAD` \
+      --build-arg VERSION=`cat VERSION` .scripts/
   - docker ps -a
   - docker images
 
