@@ -4,6 +4,8 @@ ifdef::env-github[:outfilesuffix: .adoc]
 
 ifdef::env-github[]
 image:https://img.shields.io/travis/kalemena/docker-asciidoc/master.svg[Travis build status, link=https://travis-ci.org/kalemena/docker-asciidoc]
+image:https://images.microbadger.com/badges/version/kalemena/asciidoc.svg[Docker Version, link=https://microbadger.com/images/kalemena/asciidoc]
+image:https://images.microbadger.com/badges/image/kalemena/asciidoc.svg[Docker Hub, link=https://hub.docker.com/r/kalemena/asciidoc/tags]
 endif::[]
 
 ASCIIDOC tooling
