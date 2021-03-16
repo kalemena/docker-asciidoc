@@ -22,16 +22,16 @@ ASCIIDOC tooling
 * https://powerman.name/doc/asciidoc[Cheat sheet]
 * http://www.vogella.com/tutorials/AsciiDoc/article.html[Vogella]
 
-= Convert
+== Convert
 
 Docker image has every convert tool.
 See docker-compose.yml
 
-= Confluence
+== Confluence
 
 This project uses https://github.com/alainsahli/confluence-publisher[confluence-publisher]
 
-== Manually test a page publication
+=== Manually test a page publication
 
 Assuming all variables in .env file are set properly, run following:
 
