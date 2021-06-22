@@ -1,5 +1,11 @@
 # .gitignore
 node_modules
+.gradle
+
+# ASCIIDOC / ToolChain
+*.class
+*.lock
+caches
 
 *~
 /.project
